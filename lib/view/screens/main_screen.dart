@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gwieiland_task/service/data/model.dart';
 import 'package:gwieiland_task/service/repository.dart';
-import 'package:gwieiland_task/view/screens/dummy_screens.dart/dummy.dart';
+import 'package:gwieiland_task/view/screens/dummy_screens.dart/skelton.dart';
 import 'package:gwieiland_task/view/widgets/crypto_nft.dart';
+import 'package:gwieiland_task/view/widgets/custum_nav_bar.dart';
 import 'package:gwieiland_task/view/widgets/custum_small_container.dart';
 import 'package:gwieiland_task/view/widgets/cystum_appbar.dart';
 import 'package:gwieiland_task/view/widgets/detail_container.dart';
@@ -16,15 +17,6 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int pageIndex = 0;
-
-  final pages = [
-    const PageEshop(),
-    const Exchange(),
-    const MainScreen(),
-    const LauchPads(),
-    const Wallet()
-  ];
   Datum? selectedDatum;
   List<Datum>? dataList;
 
@@ -85,7 +77,15 @@ class _MainScreenState extends State<MainScreen> {
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       // If the Future is still running, show a loading indicator
-                      return const Center(child: CircularProgressIndicator());
+                      return ListView.separated(
+                        separatorBuilder: (context, index) => SizedBox(
+                          height: khieght * .01,
+                        ),
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) => const LoadingSkelton(),
+                        itemCount: 10,
+                      );
                     } else if (snapshot.hasError) {
                       // If the Future encounters an error, display the error message
                       return Text('Error: ${snapshot.error}');
@@ -130,59 +130,6 @@ class _MainScreenState extends State<MainScreen> {
           )
         ],
       ),
-    );
-  }
-
-  Container buildMyNavBar(BuildContext context) {
-    return Container(
-      height: 75,
-      decoration: const BoxDecoration(
-        color: Color.fromARGB(255, 27, 27, 27),
-        borderRadius: BorderRadius.all(Radius.circular(25)),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          iconText(icon: Icons.sentiment_satisfied_alt_sharp, text: 'E-shop'),
-          iconText(
-              icon: Icons.compare_arrows_rounded,
-              text: 'Exchange',
-              colr: Colors.white),
-          CircleAvatar(
-            radius: 35,
-            child: Image.asset(
-              'assets/images/new sun.png',
-              //fit: BoxFit.cover,
-            ),
-          ),
-          iconText(icon: Icons.rocket_launch_outlined, text: 'Launchpads'),
-          iconText(icon: Icons.wallet_travel_sharp, text: 'Wallet')
-        ],
-      ),
-    );
-  }
-
-  Column iconText({
-    required IconData icon,
-    required String text,
-    Color? colr = Colors.grey,
-  }) {
-    return Column(
-      children: [
-        IconButton(
-          enableFeedback: false,
-          onPressed: () {},
-          icon: Icon(
-            icon,
-            color: colr,
-            size: 20,
-          ),
-        ),
-        Text(
-          text,
-          style: TextStyle(color: colr, fontSize: 11),
-        )
-      ],
     );
   }
 }

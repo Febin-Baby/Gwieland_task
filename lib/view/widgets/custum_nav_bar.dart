@@ -1,87 +1,82 @@
 import 'package:flutter/material.dart';
 import 'package:gwieiland_task/view/screens/dummy_screens.dart/dummy.dart';
-import 'package:gwieiland_task/view/screens/main_screen.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  int pageIndex = 0;
-
-  final pages = [
-    const PageEshop(),
-    const Exchange(),
-    const MainScreen(),
-    const LauchPads(),
-    const Wallet()
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    int pageIndex = 0;
-
-    final pages = [
-      const PageEshop(),
-      const Exchange(),
-      const MainScreen(),
-      const LauchPads(),
-      const Wallet()
-    ];
-    return Scaffold(
-      bottomNavigationBar: Container(
-        height: 60,
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
+Container buildMyNavBar(BuildContext context) {
+  return Container(
+    height: 75,
+    decoration: const BoxDecoration(
+      color: Color.fromARGB(255, 27, 27, 27),
+      borderRadius: BorderRadius.all(Radius.circular(25)),
+    ),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        iconText(
+          context: context,
+          icon: Icons.sentiment_satisfied_alt_sharp,
+          text: 'E-shop',
+          navigate: const PageEshop(),
+        ),
+        iconText(
+          context: context,
+          icon: Icons.compare_arrows_rounded,
+          text: 'Exchange',
+          colr: Colors.white,
+          navigate: const Exchange(),
+        ),
+        CircleAvatar(
+          radius: 35,
+          child: Image.asset(
+            'assets/images/new sun.png',
+            //fit: BoxFit.cover,
           ),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            IconButton(
-              enableFeedback: false,
-              onPressed: () {},
-              icon: const Icon(
-                Icons.home_outlined,
-                color: Colors.white,
-                size: 35,
-              ),
-            ),
-            IconButton(
-              enableFeedback: false,
-              onPressed: () {},
-              icon: const Icon(
-                Icons.work_outline_outlined,
-                color: Colors.white,
-                size: 35,
-              ),
-            ),
-            IconButton(
-              enableFeedback: false,
-              onPressed: () {},
-              icon: const Icon(
-                Icons.widgets_outlined,
-                color: Colors.white,
-                size: 35,
-              ),
-            ),
-            IconButton(
-              enableFeedback: false,
-              onPressed: () {},
-              icon: const Icon(
-                Icons.person_outline,
-                color: Colors.white,
-                size: 35,
-              ),
-            ),
-          ],
+        iconText(
+          context: context,
+          icon: Icons.rocket_launch_outlined,
+          text: 'Launchpads',
+          navigate: const LauchPads(),
         ),
+        iconText(
+          context: context,
+          icon: Icons.wallet_travel_sharp,
+          text: 'Wallet',
+          navigate: const Wallet(),
+        )
+      ],
+    ),
+  );
+}
+
+InkWell iconText({
+  required BuildContext context,
+  required IconData icon,
+  required String text,
+  required Widget navigate,
+  Color? colr = Colors.grey,
+}) {
+  return InkWell(
+    onTap: () => Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => navigate,
       ),
-    );
-  }
+    ),
+    child: Column(
+      children: [
+        IconButton(
+          enableFeedback: false,
+          onPressed: () {},
+          icon: Icon(
+            icon,
+            color: colr,
+            size: 20,
+          ),
+        ),
+        Text(
+          text,
+          style: TextStyle(color: colr, fontSize: 11),
+        )
+      ],
+    ),
+  );
 }
