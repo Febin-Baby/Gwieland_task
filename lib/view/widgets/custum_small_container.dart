@@ -20,7 +20,7 @@ class CustumSmallContainer extends StatelessWidget {
       child: Row(
         children: [
           const CircleAvatar(
-            radius: 30,
+            radius: 25,
           ),
           SizedBox(
             width: size * .03,
