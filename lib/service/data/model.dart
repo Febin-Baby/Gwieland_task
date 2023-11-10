@@ -6,7 +6,7 @@ CryptoCurrency cryptoCurrencyFromJson(String str) =>
 String cryptoCurrencyToJson(CryptoCurrency data) => json.encode(data.toJson());
 
 class CryptoCurrency {
-  List<Datum> data;
+  List<Datum>? data;
 
   CryptoCurrency({
     required this.data,
@@ -17,30 +17,30 @@ class CryptoCurrency {
       );
 
   Map<String, dynamic> toJson() => {
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+        "data": List<dynamic>.from(data!.map((x) => x.toJson())),
       };
 }
 
 class Datum {
   int id;
-  String? name;
-  String? symbol;
-  String? slug;
-  Quote? quote;
+  String name;
+  String symbol;
+  String slug;
+  Quote quote;
 
   Datum({
     required this.id,
-    this.name,
-    this.symbol,
-    this.slug,
-    this.quote,
+    required this.name,
+    required this.symbol,
+    required this.slug,
+    required this.quote,
   });
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"],
-        name: json["name"] ?? 'No name',
-        symbol: json["symbol"] ?? 'No symbol',
-        slug: json["slug"] ?? 'No',
+        name: json["name"],
+        symbol: json["symbol"],
+        slug: json["slug"],
         quote: Quote.fromJson(json["quote"]),
       );
 
@@ -84,9 +84,9 @@ class Usd {
 
   factory Usd.fromJson(Map<String, dynamic> json) => Usd(
         price: json["price"],
-        volume24H: json["volume_24h"]?.toDouble(),
-        volumeChange24H: json["volume_change_24h"]?.toDouble(),
-        percentChange24H: json["percent_change_24h"]?.toDouble(),
+        volume24H: json["volume_24h"],
+        volumeChange24H: json["volume_change_24h"],
+        percentChange24H: json["percent_change_24h"],
       );
 
   Map<String, dynamic> toJson() => {
