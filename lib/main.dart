@@ -1,8 +1,37 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:gwieiland_task/view/screens/main_screen.dart';
 import 'package:http/http.dart' as http;
 
-void main() {
+void main() async {
+  String apiKey = "302cf476-d4ef-4b94-85b1-458a867b4371";
+  String apiUrl =
+      "https://sandbox-api.coinmarketcap.com/v1/cryptocurrency/listings/latest";
+
+  try {
+    Uri uri = Uri.parse(apiUrl);
+
+    http.Response response = await http.get(
+      uri,
+      headers: {
+        'X-CMC_PRO_API_KEY': apiKey,
+        'Accept': 'application/json',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      // Successful response
+      Map<String, dynamic> data = json.decode(response.body);
+      print("Response: $data");
+    } else {
+      // Handle error
+      print("Error: ${response.statusCode} - ${response.body}");
+    }
+  } catch (error) {
+    // Handle network error
+    print("Network error: $error");
+  }
   runApp(const MyApp());
 }
 
