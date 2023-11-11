@@ -14,7 +14,7 @@ Container buildMyNavBar(BuildContext context) {
         iconText(
           context: context,
           icon: Icons.sentiment_satisfied_alt_sharp,
-          text: 'E-shop',
+          text: '€-\$hop',
           navigate: const PageEshop(),
         ),
         iconText(

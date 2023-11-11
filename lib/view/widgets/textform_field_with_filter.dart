@@ -49,7 +49,9 @@ class TextFormFieldWithFilter extends StatelessWidget {
         ),
         const Spacer(),
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            DropdownButton(items: const [DropdownMenuItem(child: Text('Price'))], onChanged: (value) => ,)
+          },
           child: SizedBox(
             height: khieght * .06,
             width: size * .2,

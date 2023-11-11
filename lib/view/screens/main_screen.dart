@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gwieiland_task/data/core/contants.dart';
 import 'package:gwieiland_task/service/data/model.dart';
 import 'package:gwieiland_task/service/repository.dart';
 import 'package:gwieiland_task/view/screens/dummy_screens.dart/skelton.dart';
@@ -7,7 +8,6 @@ import 'package:gwieiland_task/view/widgets/custum_nav_bar.dart';
 import 'package:gwieiland_task/view/widgets/custum_small_container.dart';
 import 'package:gwieiland_task/view/widgets/cystum_appbar.dart';
 import 'package:gwieiland_task/view/widgets/detail_container.dart';
-import 'package:gwieiland_task/view/widgets/textform_field_with_filter.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -21,13 +21,11 @@ class _MainScreenState extends State<MainScreen> {
   List<Datum>? dataList;
   String selectedFilter = 'Price';
   final List<String> filter = ['Price', 'Volume 24H'];
-  int? id;
-  int? index;
 
   @override
   void initState() {
     super.initState();
-    fetchData(2).then((data) {
+    fetchData().then((data) {
       setState(() {
         dataList = data;
         if (data.isNotEmpty) {
@@ -45,10 +43,10 @@ class _MainScreenState extends State<MainScreen> {
       backgroundColor: Colors.white,
       appBar: const WidgetAppbar(),
       body: FutureBuilder(
-        future: fetchData(id ?? 1),
+        future: fetchData(),
         builder: (context, snapshot) {
-          index = snapshot.data![index ?? 1].cmcrank;
-          id = snapshot.data![index ?? 1].id;
+          // index = snapshot.data![index ?? 1].cmcrank;
+          // id = snapshot.data![index ?? 1].id;
           if (snapshot.connectionState == ConnectionState.waiting) {
             // If the Future is still running, show a loading indicator
             return ListView.separated(
@@ -58,7 +56,7 @@ class _MainScreenState extends State<MainScreen> {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) => const LoadingSkelton(),
-              itemCount: 20,
+              itemCount: 15,
             );
           } else if (snapshot.hasError) {
             // If the Future encounters an error, display the error message
@@ -68,7 +66,6 @@ class _MainScreenState extends State<MainScreen> {
             return const Center(child: Text('No data available'));
           } else {
             // By default It will disolay CMC Rank List order.
-
             return Stack(
               children: [
                 Padding(
@@ -77,26 +74,88 @@ class _MainScreenState extends State<MainScreen> {
                     children: [
                       Row(
                         children: [
-                          const Text('Filter:'),
-                          const SizedBox(width: 10),
-                          DropdownButton<String>(
-                            value: selectedFilter,
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                selectedFilter = newValue!;
-                              });
-                            },
-                            items: filter
-                                .map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
+                          SizedBox(
+                            height: khieght * .07,
+                            width: size * .6,
+                            child: TextFormField(
+                              decoration: InputDecoration(
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                  borderSide: const BorderSide(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                  borderSide: const BorderSide(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                fillColor: Colors.grey[200],
+                                filled: true,
+                                border: const OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.white),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(30),
+                                  ),
+                                ),
+                                prefixIcon: const Icon(
+                                  Icons.search,
+                                  color: Colors.grey,
+                                ),
+                                hintText: 'Search cryptocurrency',
+                                hintStyle: const TextStyle(
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ),
+                          ),
+                          const Spacer(),
+                          SizedBox(
+                            height: khieght * .06,
+                            width: size * .2,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.filter_list,
+                                    color: Colors.grey,
+                                    size: size * .05,
+                                  ),
+                                  SizedBox(
+                                    width: size * .01,
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      DropdownButton(
+                                        items: const [
+                                          DropdownMenuItem(
+                                              child: Text('Price')),
+                                          DropdownMenuItem(
+                                              child: Text('Volume'))
+                                        ],
+                                        onChanged: (value) {
+                                          if (value == 'Price') {}
+                                        },
+                                      );
+                                    },
+                                    child: const Text(
+                                      'Filter',
+                                      style: kgrey,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
                         ],
                       ),
-                      TextFormFieldWithFilter(size: size, khieght: khieght),
+                      //TextFormFieldWithFilter(size: size, khieght: khieght),
                       SizedBox(height: khieght * .02),
                       CryptoNFT(size: size),
                       SizedBox(height: khieght * .02),
@@ -150,8 +209,8 @@ class _MainScreenState extends State<MainScreen> {
                 ),
                 Positioned(
                   bottom: 13,
-                  left: 10,
-                  right: 10,
+                  left: 9,
+                  right: 9,
                   child: buildMyNavBar(context),
                 )
               ],

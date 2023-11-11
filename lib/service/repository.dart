@@ -2,7 +2,7 @@ import 'package:gwieiland_task/data/api_endpoints/api_datas.dart';
 import 'package:gwieiland_task/service/data/model.dart';
 import 'package:http/http.dart' as http;
 
-Future<List<Datum>> fetchData(int id) async {
+Future<List<Datum>> fetchData() async {
   try {
     Uri uri = Uri.parse(domain);
     http.Response response = await http.get(
