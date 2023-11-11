@@ -15,19 +15,9 @@ Future<String> fetchDataa(int id) async {
     );
 
     if (response.statusCode == 200) {
-      // If the server returns a 200 OK response, parse the JSON
-      // print(response.body);
-
       final result = jsonDecode(response.body);
       final String img = result['data']['$id']['logo'];
       return img;
-      // if (result != null) {
-      //   MetadataV2 cryptoCurrency = MetadataV2.fromJson(result);
-      //   print('Hai ${cryptoCurrency.data?.the1.logo}');
-      //   return cryptoCurrency.data?.the1.logo ?? '';
-      // } else {
-      //   return '';
-      // }
     } else {
       print("Error: ${response.statusCode} - ${response.body}");
       return '';

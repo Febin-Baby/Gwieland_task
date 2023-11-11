@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gwieiland_task/view/screens/dummy_screens.dart/dummy.dart';
+import 'package:gwieiland_task/view/screens/main_screen.dart';
 
 Container buildMyNavBar(BuildContext context) {
   return Container(
@@ -12,73 +12,73 @@ Container buildMyNavBar(BuildContext context) {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         iconText(
+          number: 0,
           context: context,
           icon: Icons.sentiment_satisfied_alt_sharp,
           text: '€-\$hop',
-          navigate: const PageEshop(),
         ),
         iconText(
+          number: 1,
           context: context,
           icon: Icons.compare_arrows_rounded,
           text: 'Exchange',
           colr: Colors.white,
-          navigate: const Exchange(),
         ),
-        CircleAvatar(
-          radius: 35,
-          child: Image.asset(
-            'assets/images/new sun.png',
+        InkWell(
+          onTap: () {
+            valueNotifier.value = 2;
+            valueNotifier.notifyListeners();
+          },
+          child: CircleAvatar(
+            radius: 35,
+            child: Image.asset(
+              'assets/images/new sun.png',
+            ),
           ),
         ),
         iconText(
+          number: 3,
           context: context,
           icon: Icons.rocket_launch_outlined,
           text: 'Launchpads',
-          navigate: const LauchPads(),
         ),
         iconText(
+          number: 4,
           context: context,
           icon: Icons.wallet_travel_sharp,
           text: 'Wallet',
-          navigate: const Wallet(),
         )
       ],
     ),
   );
 }
 
-InkWell iconText({
+Column iconText({
+  required int number,
   required BuildContext context,
   required IconData icon,
   required String text,
-  required Widget navigate,
   Color? colr = Colors.grey,
 }) {
-  return InkWell(
-    onTap: () {
-      debugPrint('touch');
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => navigate,
+  return Column(
+    children: [
+      IconButton(
+        enableFeedback: false,
+        onPressed: () {
+          debugPrint('touch');
+          valueNotifier.value = number;
+          valueNotifier.notifyListeners();
+        },
+        icon: Icon(
+          icon,
+          color: colr,
+          size: 20,
         ),
-      );
-    },
-    child: Column(
-      children: [
-        IconButton(
-          enableFeedback: false,
-          onPressed: () {},
-          icon: Icon(
-            icon,
-            color: colr,
-            size: 20,
-          ),
-        ),
-        Text(
-          text,
-          style: TextStyle(color: colr, fontSize: 11),
-        )
-      ],
-    ),
+      ),
+      Text(
+        text,
+        style: TextStyle(color: colr, fontSize: 11),
+      )
+    ],
   );
 }

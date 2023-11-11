@@ -13,14 +13,14 @@ class PageEshop extends StatelessWidget {
   }
 }
 
-class Exchange extends StatelessWidget {
-  const Exchange({super.key});
+class Sun extends StatelessWidget {
+  const Sun({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: Text('Exchange'),
+        child: Text('Sun'),
       ),
     );
   }

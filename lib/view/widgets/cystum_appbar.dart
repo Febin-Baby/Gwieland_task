@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gwieiland_task/data/core/contants.dart';
+import 'package:gwieiland_task/view/screens/main_screen.dart';
 
 class WidgetAppbar extends StatelessWidget implements PreferredSize {
   @override
@@ -15,10 +16,19 @@ class WidgetAppbar extends StatelessWidget implements PreferredSize {
 
   @override
   Widget build(BuildContext context) {
+    List appBarName = [
+      'E- SHOP',
+      'EXCHANGES',
+      'HOME',
+      'LAUNCHPADS',
+      'WALLET',
+    ];
     return AppBar(
       backgroundColor: Colors.transparent,
       elevation: 0,
-      title: textBold('EXCHANGES'),
+      title: ValueListenableBuilder(
+          valueListenable: valueNotifier,
+          builder: (context, value, child) => textBold(appBarName[value])),
       iconTheme: const IconThemeData(color: Colors.black),
       actions: [
         IconButton(
