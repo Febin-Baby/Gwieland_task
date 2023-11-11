@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gwieiland_task/data/core/contants.dart';
 import 'package:gwieiland_task/service/data/model.dart';
 
 class DetailContainer extends StatelessWidget {
@@ -45,13 +46,7 @@ class DetailContainer extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    data.symbol,
-                    style: const TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
+                  textBold(data.symbol),
                   Text(data.name),
                 ],
               ),

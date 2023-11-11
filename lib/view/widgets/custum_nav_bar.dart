@@ -56,11 +56,14 @@ InkWell iconText({
   Color? colr = Colors.grey,
 }) {
   return InkWell(
-    onTap: () => Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => navigate,
-      ),
-    ),
+    onTap: () {
+      debugPrint('touch');
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => navigate,
+        ),
+      );
+    },
     child: Column(
       children: [
         IconButton(

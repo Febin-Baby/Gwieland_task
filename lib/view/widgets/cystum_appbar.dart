@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:gwieiland_task/data/core/contants.dart';
 
 class WidgetAppbar extends StatelessWidget implements PreferredSize {
   @override
@@ -17,14 +18,7 @@ class WidgetAppbar extends StatelessWidget implements PreferredSize {
     return AppBar(
       backgroundColor: Colors.transparent,
       elevation: 0,
-      title: const Text(
-        'EXCHANGES',
-        style: TextStyle(
-          color: Colors.black,
-          fontFamily: 'Lora',
-          fontWeight: FontWeight.w800,
-        ),
-      ),
+      title: textBold('EXCHANGES'),
       iconTheme: const IconThemeData(color: Colors.black),
       actions: [
         IconButton(

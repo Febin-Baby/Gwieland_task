@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gwieiland_task/data/core/contants.dart';
 
 class CryptoNFT extends StatelessWidget {
   const CryptoNFT({
@@ -12,10 +13,7 @@ class CryptoNFT extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const Text(
-          'Cryptocurrencey',
-          style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
-        ),
+        textBold('Cryptocurrency'),
         SizedBox(
           width: size * .1,
         ),

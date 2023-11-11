@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gwieiland_task/data/core/contants.dart';
 import 'package:gwieiland_task/service/data/model.dart';
 
 // ignore: must_be_immutable
@@ -25,16 +26,15 @@ class CustumSmallContainer extends StatelessWidget {
           SizedBox(
             width: size * .03,
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                data.symbol,
-                style:
-                    const TextStyle(fontSize: 17, fontWeight: FontWeight.w700),
-              ),
-              Text(name[0].toString()),
-            ],
+          SizedBox(
+            width: size * 0.17,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                textBold(data.symbol),
+                Text(name[0].toString()),
+              ],
+            ),
           ),
           Column(
             children: [
@@ -50,7 +50,7 @@ class CustumSmallContainer extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: khieght * .02,
+                height: khieght * .03,
               )
             ],
           ),
@@ -58,14 +58,10 @@ class CustumSmallContainer extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
+              //
+              textBold('\$${data.quote.usd.price.toInt()} USD'),
               Text(
-                '\$${data.quote.usd.price.toInt()} USD',
-                overflow: TextOverflow.ellipsis,
-                style:
-                    const TextStyle(fontSize: 17, fontWeight: FontWeight.w700),
-              ),
-              Text(
-                '+${data.quote.usd.percentChange24H.toStringAsFixed(1)}',
+                data.quote.usd.percentChange24H.toStringAsFixed(1),
                 style: data.quote.usd.percentChange24H > 0
                     ? const TextStyle(color: Color.fromARGB(255, 5, 246, 53))
                     : const TextStyle(color: Colors.red),
