@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gwieiland_task/data/core/contants.dart';
 import 'package:gwieiland_task/service/data/model.dart';
+import 'package:gwieiland_task/service/data/repository/metadata_v2.dart';
 
 class DetailContainer extends StatelessWidget {
   const DetailContainer({
@@ -38,8 +39,17 @@ class DetailContainer extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const CircleAvatar(
-              radius: 22,
+            FutureBuilder(
+              future: fetchDataa(1),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const CircularProgressIndicator();
+                }
+                return CircleAvatar(
+                  radius: 22,
+                  foregroundImage: NetworkImage(snapshot.data!),
+                );
+              },
             ),
             Padding(
               padding: EdgeInsets.only(top: size * .01, left: size * .04),

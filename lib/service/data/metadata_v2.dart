@@ -23,7 +23,7 @@ class Data {
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-        the1: The1.fromJson(json["the1"]),
+        the1: The1.fromJson(json["1"]),
       );
 }
 

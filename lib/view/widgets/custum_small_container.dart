@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gwieiland_task/data/core/contants.dart';
 import 'package:gwieiland_task/service/data/model.dart';
+import 'package:gwieiland_task/service/data/repository/metadata_v2.dart';
 
 // ignore: must_be_immutable
 class CustumSmallContainer extends StatelessWidget {
@@ -21,8 +22,21 @@ class CustumSmallContainer extends StatelessWidget {
       child: Row(
         children: [
           //Text(data.cmcrank.toString()),
-          const CircleAvatar(
-            radius: 25,
+          FutureBuilder(
+            future: fetchDataa(data.id),
+            builder: (context, snapshot) {
+              print("${snapshot.data}");
+              if (!snapshot.hasData) {
+                return const CircleAvatar(
+                  radius: 22,
+                  child: CircularProgressIndicator(),
+                );
+              }
+              return CircleAvatar(
+                foregroundImage: NetworkImage(snapshot.data!),
+                radius: 22,
+              );
+            },
           ),
           SizedBox(
             width: size * .03,
