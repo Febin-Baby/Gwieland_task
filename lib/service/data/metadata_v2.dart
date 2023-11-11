@@ -4,7 +4,7 @@ MetadataV2 metadataV2FromJson(String str) =>
     MetadataV2.fromJson(json.decode(str));
 
 class MetadataV2 {
-  Data data;
+  Data? data;
 
   MetadataV2({
     required this.data,

@@ -28,7 +28,6 @@ Container buildMyNavBar(BuildContext context) {
           radius: 35,
           child: Image.asset(
             'assets/images/new sun.png',
-            //fit: BoxFit.cover,
           ),
         ),
         iconText(

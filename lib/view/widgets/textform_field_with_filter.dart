@@ -48,35 +48,30 @@ class TextFormFieldWithFilter extends StatelessWidget {
           ),
         ),
         const Spacer(),
-        GestureDetector(
-          onTap: () {
-            DropdownButton(items: const [DropdownMenuItem(child: Text('Price'))], onChanged: (value) => ,)
-          },
-          child: SizedBox(
-            height: khieght * .06,
-            width: size * .2,
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
-                borderRadius: BorderRadius.circular(30),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.filter_list,
-                    color: Colors.grey,
-                    size: size * .05,
-                  ),
-                  SizedBox(
-                    width: size * .01,
-                  ),
-                  const Text(
-                    'Filter',
-                    style: kgrey,
-                  ),
-                ],
-              ),
+        SizedBox(
+          height: khieght * .06,
+          width: size * .2,
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey),
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.filter_list,
+                  color: Colors.grey,
+                  size: size * .05,
+                ),
+                SizedBox(
+                  width: size * .01,
+                ),
+                const Text(
+                  'Filter',
+                  style: kgrey,
+                ),
+              ],
             ),
           ),
         ),
