@@ -19,11 +19,15 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   Datum? selectedDatum;
   List<Datum>? dataList;
+  String selectedFilter = 'Price';
+  final List<String> filter = ['Price', 'Volume 24H'];
+  int? id;
+  int? index;
 
   @override
   void initState() {
     super.initState();
-    fetchData().then((data) {
+    fetchData(2).then((data) {
       setState(() {
         dataList = data;
         if (data.isNotEmpty) {
@@ -40,60 +44,85 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: const WidgetAppbar(),
-      body: Stack(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25),
-            child: ListView(
+      body: FutureBuilder(
+        future: fetchData(id ?? 1),
+        builder: (context, snapshot) {
+          index = snapshot.data![index ?? 1].cmcrank;
+          id = snapshot.data![index ?? 1].id;
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            // If the Future is still running, show a loading indicator
+            return ListView.separated(
+              separatorBuilder: (context, index) => SizedBox(
+                height: khieght * .01,
+              ),
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) => const LoadingSkelton(),
+              itemCount: 20,
+            );
+          } else if (snapshot.hasError) {
+            // If the Future encounters an error, display the error message
+            return Text('Error: ${snapshot.error}');
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            // If the Future is completed but the data is empty, show a message
+            return const Center(child: Text('No data available'));
+          } else {
+            // By default It will disolay CMC Rank List order.
+
+            return Stack(
               children: [
-                TextFormFieldWithFilter(size: size, khieght: khieght),
-                SizedBox(height: khieght * .02),
-                CryptoNFT(size: size),
-                SizedBox(height: khieght * .02),
-                if (selectedDatum != null) ...[
-                  DetailContainer(
-                    size: size,
-                    khieght: khieght,
-                    data: selectedDatum!,
-                  ),
-                  SizedBox(height: khieght * .02),
-                ],
-                SizedBox(height: khieght * .02),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Top cryptocurencies',
-                      style: TextStyle(fontSize: 19),
-                    ),
-                    Text('View all'),
-                  ],
-                ),
-                SizedBox(
-                  height: khieght * .02,
-                ),
-                FutureBuilder(
-                  future: fetchData(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      // If the Future is still running, show a loading indicator
-                      return ListView.separated(
-                        separatorBuilder: (context, index) => SizedBox(
-                          height: khieght * .01,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25),
+                  child: ListView(
+                    children: [
+                      Row(
+                        children: [
+                          const Text('Filter:'),
+                          const SizedBox(width: 10),
+                          DropdownButton<String>(
+                            value: selectedFilter,
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                selectedFilter = newValue!;
+                              });
+                            },
+                            items: filter
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                          ),
+                        ],
+                      ),
+                      TextFormFieldWithFilter(size: size, khieght: khieght),
+                      SizedBox(height: khieght * .02),
+                      CryptoNFT(size: size),
+                      SizedBox(height: khieght * .02),
+                      if (selectedDatum != null) ...[
+                        DetailContainer(
+                          size: size,
+                          khieght: khieght,
+                          data: selectedDatum!,
                         ),
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) => const LoadingSkelton(),
-                        itemCount: 10,
-                      );
-                    } else if (snapshot.hasError) {
-                      // If the Future encounters an error, display the error message
-                      return Text('Error: ${snapshot.error}');
-                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                      // If the Future is completed but the data is empty, show a message
-                      return const Center(child: Text('No data available'));
-                    } else {
-                      return SizedBox(
+                        SizedBox(height: khieght * .02),
+                      ],
+                      SizedBox(height: khieght * .02),
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Top cryptocurencies',
+                            style: TextStyle(fontSize: 19),
+                          ),
+                          Text('View all'),
+                        ],
+                      ),
+                      SizedBox(
+                        height: khieght * .02,
+                      ),
+                      SizedBox(
                         child: ListView.separated(
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,
@@ -115,20 +144,20 @@ class _MainScreenState extends State<MainScreen> {
                           ),
                           itemCount: 20,
                         ),
-                      );
-                    }
-                  },
+                      )
+                    ],
+                  ),
                 ),
+                Positioned(
+                  bottom: 13,
+                  left: 10,
+                  right: 10,
+                  child: buildMyNavBar(context),
+                )
               ],
-            ),
-          ),
-          Positioned(
-            bottom: 13,
-            left: 10,
-            right: 10,
-            child: buildMyNavBar(context),
-          )
-        ],
+            );
+          }
+        },
       ),
     );
   }

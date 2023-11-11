@@ -20,6 +20,7 @@ class CustumSmallContainer extends StatelessWidget {
     return SizedBox(
       child: Row(
         children: [
+          //Text(data.cmcrank.toString()),
           const CircleAvatar(
             radius: 25,
           ),
@@ -58,7 +59,6 @@ class CustumSmallContainer extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              //
               textBold('\$${data.quote.usd.price.toInt()} USD'),
               Text(
                 data.quote.usd.percentChange24H.toStringAsFixed(1),
